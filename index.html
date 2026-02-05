@@ -14,15 +14,15 @@
   <style>
     :root{
       /* Couleurs éclaircies */
-      --bg-1: #f6fbff;           /* très clair */
-      --bg-2: #f1f8f6;           /* très clair verdâtre */
+      --bg-1: #f6fbff;
+      --bg-2: #f1f8f6;
       --glass: rgba(255,255,255,0.7);
-      --card: rgba(255,255,255,0.85);
-      --muted: #61707a;         /* texte secondaire */
-      --text: #07203a;          /* texte principal sombre */
-      --accent: #16a34a;        /* vert principal */
-      --accent-2: #0ea5e9;      /* bleu secondaire */
-      --accent-3: #ffd166;      /* jaune accent */
+      --card: rgba(255,255,255,0.95);
+      --muted: #61707a;
+      --text: #07203a;
+      --accent: #16a34a;
+      --accent-2: #0ea5e9;
+      --accent-3: #ffd166;
       --radius: 14px;
       --maxw: 1200px;
       --gap: 20px;
@@ -74,6 +74,7 @@
       gap:var(--gap);
       position:relative;
       z-index:10;
+      padding:0 16px;
     }
 
     /* Header */
@@ -86,13 +87,14 @@
       top:18px;
       padding:14px;
       border-radius:16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.88));
       box-shadow: 0 8px 24px rgba(10,20,34,0.04);
       border: 1px solid rgba(10,20,30,0.04);
       backdrop-filter: blur(6px) saturate(120%);
+      flex-wrap:wrap;
     }
 
-    .brand{display:flex;gap:14px;align-items:center}
+    .brand{display:flex;gap:14px;align-items:center;min-width:0}
     .logo-hero{
       width:76px; height:76px;
       border-radius:50%;
@@ -103,15 +105,16 @@
       border:1px solid rgba(15,23,42,0.04);
       flex-shrink:0;
       transition:transform .18s ease, box-shadow .18s ease;
+      min-width:56px;
     }
     .logo-hero:hover{transform:translateY(-4px)}
     .logo-hero img{
       width:100%; height:100%; display:block; object-fit:cover; border-radius:50%;
       border: 1px solid rgba(255,255,255,0.6); background-color: #fff;
     }
-    .brand-title{display:flex;flex-direction:column}
-    h1{font-size:18px;margin:0;color:var(--text);font-weight:800}
-    .sub{color:var(--muted); font-size:13px}
+    .brand-title{display:flex;flex-direction:column;min-width:0}
+    h1{font-size:18px;margin:0;color:var(--text);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sub{color:var(--muted); font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320px}
 
     /* Nav - desktop */
     nav.desktop{
@@ -121,6 +124,7 @@
       background:transparent;
       padding:6px;
       border-radius:12px;
+      flex-wrap:wrap;
     }
     nav.desktop a{
       color:var(--text);
@@ -131,7 +135,6 @@
       border-radius:10px;
       position:relative;
       transition:all .18s ease;
-      color:var(--text);
     }
     nav.desktop a::after{
       content:'';
@@ -152,6 +155,8 @@
     /* right utilities */
     .header-right{display:flex;align-items:center;gap:12px}
 
+    .header-right img{height:64px; width:auto; border-radius:12px; object-fit:contain}
+
     /* hamburger */
     .hamburger{
       display:none;
@@ -169,7 +174,7 @@
       right:0;
       top:0;
       height:100vh;
-      width:320px;
+      width:360px;
       max-width:90%;
       transform:translateX(100%);
       background:linear-gradient(180deg, #ffffff, #f6fbff);
@@ -180,6 +185,7 @@
       display:flex;
       flex-direction:column;
       gap:18px;
+      overflow:auto;
     }
     .mobile-drawer.open{transform:translateX(0)}
     .drawer-close{align-self:flex-end;background:transparent;border:0;color:var(--muted);font-weight:700;cursor:pointer}
@@ -207,7 +213,7 @@
       border:1px solid rgba(10,20,30,0.03);
       background: linear-gradient(90deg, rgba(126,231,135,0.06), rgba(14,165,233,0.04));
     }
-    .hero-left{flex:1;min-width:260px}
+    .hero-left{flex:1;min-width:260px;max-width:800px}
     .hero-left h2{margin:0 0 8px 0;font-size:28px;color:var(--text);letter-spacing:-0.3px}
     .hero-left p{margin:0;color:var(--muted);font-size:15px}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
@@ -215,6 +221,7 @@
       display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(10,20,30,0.06);color:var(--text);
       padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;transition:all .14s ease;text-decoration:none;
       background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+      white-space:nowrap;
     }
     .btn.primary{background:linear-gradient(90deg,var(--accent), var(--accent-2)); color:#072027; border:none; box-shadow:0 14px 30px rgba(16,176,74,0.12);}
 
@@ -225,10 +232,15 @@
       align-items:center;
       justify-content:flex-end;
       flex-direction:column;
+      flex-shrink:0;
     }
 
-    /* grid */
-    .grid{display:grid;grid-template-columns: repeat(3,1fr);gap:18px}
+    /* grid - responsive using auto-fit */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap:18px;
+    }
     .card{
       background:var(--card);
       border-radius:12px;padding:18px;min-height:110px;border:1px solid rgba(10,20,30,0.04);box-shadow:0 8px 20px rgba(8,20,34,0.04);transition:transform .18s ease;
@@ -240,7 +252,7 @@
     /* contact */
     .contact-section{
       background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
-      padding:22px;border-radius:14px;display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start;border:1px solid rgba(10,20,30,0.04);
+      padding:22px;border-radius:14px;display:grid;grid-template-columns:1fr minmax(280px,420px);gap:18px;align-items:start;border:1px solid rgba(10,20,30,0.04);
     }
     .contact-card{background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.95)); padding:16px; border-radius:12px; border:1px solid rgba(10,20,30,0.03);}
 
@@ -256,23 +268,50 @@
     #topBtn{position:fixed;right:20px;bottom:20px;width:56px;height:56px;background:linear-gradient(180deg,var(--accent), var(--accent-2));color:#072027;border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 36px rgba(8,20,34,0.08);border:none;cursor:pointer;transform:translateY(120px);transition:transform .32s cubic-bezier(.2,.9,.3,1),opacity .2s;opacity:0;z-index:60}
     #topBtn.visible{transform:translateY(0); opacity:1}
 
+    /* small helpers */
+    .sr-only{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+
     /* responsive */
+    @media (max-width:1100px){
+      .hero-left h2{font-size:26px}
+      .sub{max-width:220px}
+    }
     @media (max-width:980px){
-      .grid{grid-template-columns: repeat(2,1fr)}
+      .grid{grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))}
       .contact-section{grid-template-columns:1fr}
       nav.desktop{display:none}
       .hamburger{display:flex}
+      .header-right img{height:56px}
+      .logo-hero{width:66px;height:66px}
+      .hero-right{align-items:flex-start;justify-content:flex-start}
     }
-    @media (max-width:640px){
-      .grid{grid-template-columns:1fr}
+    @media (max-width:720px){
+      body{padding:18px 12px}
       .logo-hero{width:56px;height:56px}
       h1{font-size:16px}
       .hero-left h2{font-size:20px}
       header{padding:12px}
+      .hero{padding:18px}
+      .hero-right{min-width:unset;width:100%;align-items:flex-start}
+      .hero-left{max-width:100%}
+      .hero-actions .btn{flex:1;justify-content:center;padding:12px 14px}
+      .header-right a img{display:none}
+      .brand{gap:10px}
+      .sub{display:none}
+    }
+    @media (max-width:420px){
+      .mobile-drawer{width:100%;max-width:100%;padding:20px}
+      .logo-hero{width:48px;height:48px}
+      .btn{padding:10px; font-size:15px}
+      .hero-left h2{font-size:18px}
+      #topBtn{right:12px;bottom:12px;width:48px;height:48px}
+      footer{padding:14px}
+      .contact-card{padding:12px}
     }
   </style>
 </head>
 <body>
+  <a class="sr-only" href="#hero">Aller au contenu</a>
   <div class="wrap" id="page">
     <header>
       <div class="brand" style="align-items:center">
@@ -296,10 +335,10 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <div class="header-right">
+      <div class="header-right" aria-hidden="false">
         <!-- small eco logo (optional) -->
         <a href="#hero" title="Éco-Trinité" style="display:inline-flex;align-items:center;text-decoration:none;color:inherit">
-          <img src="LogoOfficiel EcoTrinite.png" alt="Logo Éco-Trinité" style="height:90px;border-radius:45px;object-fit:contain;box-shadow:0 8px 20px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04)">
+          <img src="LogoOfficiel EcoTrinite.png" alt="Logo Éco-Trinité" style="height:90px;border-radius:12px;object-fit:contain;box-shadow:0 8px 20px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04)">
         </a>
 
         <!-- Hamburger -->
@@ -339,7 +378,7 @@
         <div class="hero-right" aria-hidden="false">
           <div style="text-align:right; width:100%">
             <div class="small-muted">Suivez-nous</div>
-            <div class="socials" style="margin-top:12px; justify-content:flex-end">
+            <div class="socials" style="margin-top:12px; justify-content:flex-end; display:flex; gap:8px">
               <a class="btn" style="padding:8px 10px" href="https://www.instagram.com/institution_sainte_trinite_off/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Institution Sainte-Trinité">Instagram</a>
               <a class="btn" style="padding:8px 10px" href="https://www.facebook.com/institution.sainte.trinite.marseille" target="_blank" rel="noopener noreferrer" aria-label="Facebook Institution Sainte-Trinité">Facebook</a>
             </div>
@@ -433,7 +472,7 @@
         </div>
 
         <div class="footer-col" style="align-items:flex-end">
-          <div class="socials">
+          <div class="socials" style="display:flex; gap:8px">
             <a class="btn" href="https://www.instagram.com/institution_sainte_trinite_off/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Institution Sainte-Trinité">Instagram</a>
             <a class="btn" href="https://www.facebook.com/institution.sainte.trinite.marseille" target="_blank" rel="noopener noreferrer" aria-label="Facebook Institution Sainte-Trinité">Facebook</a>
           </div>
@@ -472,7 +511,9 @@
       hamburgerBtn.setAttribute('aria-expanded','true');
       drawerOverlay.classList.add('show');
       drawerOverlay.setAttribute('aria-hidden','false');
-      mobileDrawer.focus();
+      // focus first link for accessibility
+      const firstLink = mobileDrawer.querySelector('.drawer-nav a');
+      (firstLink || mobileDrawer).focus();
       document.body.style.overflow = 'hidden';
     }
     function closeDrawer(){
@@ -495,6 +536,15 @@
     // close drawer on Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileDrawer.classList.contains('open')) closeDrawer();
+      // improve keyboard navigation: trap focus inside drawer when open
+      if (mobileDrawer.classList.contains('open') && e.key === 'Tab') {
+        const focusable = mobileDrawer.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+        else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+      }
     });
 
     // drawer navigation links (smooth scroll + close)
@@ -503,7 +553,7 @@
         e.preventDefault();
         const id = a.getAttribute('data-target');
         const el = document.getElementById(id);
-        if (el) el.scrollIntoView({behavior:'smooth'});
+        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
         closeDrawer();
       });
     });
@@ -517,7 +567,7 @@
         a.classList.add('active');
         const id = a.getAttribute('href').slice(1);
         const el = document.getElementById(id);
-        if (el) el.scrollIntoView({behavior:'smooth'});
+        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
       });
     });
 
@@ -551,8 +601,6 @@
       const emailVal = document.getElementById('email').value.trim();
       const messageVal = document.getElementById('message').value.trim();
 
-      const name = encodeURIComponent(nameVal);
-      const email = encodeURIComponent(emailVal);
       const subject = encodeURIComponent('Contact Éco-délégués — ' + (nameVal || 'Nouvelle demande'));
       const body = encodeURIComponent('Nom: ' + (nameVal || '') + '\nEmail: ' + (emailVal || '') + '\n\n' + (messageVal || ''));
       const mailto = 'mailto:cdi.lycee@sainte-trinite.fr?subject=' + subject + '&body=' + body;
@@ -593,33 +641,13 @@
         closeDrawer();
       }
     });
-  </script>
-  <script>
-  function showEcoInitials(){
-    if (document.getElementById('ecoInitials')) return;
-    const anchor = document.querySelector('.header-right a[href="#hero"]') || document.querySelector('.header-right a');
-    if (!anchor) return;
-    const div = document.createElement('div');
-    div.id = 'ecoInitials';
-    div.textContent = 'ET'; // ou 'ÉT' si vous préférez
-    Object.assign(div.style, {
-      width: '70px',
-      height: '70px',
-      borderRadius: '12px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontWeight: '800',
-      fontSize: '18px',
-      color: 'var(--text)',
-      background: 'linear-gradient(180deg,#ffffff,#f0fbf6)',
-      boxShadow: '0 8px 20px rgba(0,0,0,0.06)',
-      border: '1px solid rgba(0,0,0,0.04)'
+
+    // Small enhancement: ensure images are responsive
+    document.querySelectorAll('img').forEach(img => {
+      img.style.maxWidth = '100%';
+      img.style.height = 'auto';
+      img.setAttribute('decoding','async');
     });
-    anchor.appendChild(div);
-  }
-  // (optionnel) log utile pour debug
-  document.getElementById('ecoLogo')?.addEventListener('error', () => console.warn('ecoLogo failed to load: check path / filename'));
-</script>
+  </script>
 </body>
 </html>
