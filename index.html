@@ -594,5 +594,32 @@
       }
     });
   </script>
+  <script>
+  function showEcoInitials(){
+    if (document.getElementById('ecoInitials')) return;
+    const anchor = document.querySelector('.header-right a[href="#hero"]') || document.querySelector('.header-right a');
+    if (!anchor) return;
+    const div = document.createElement('div');
+    div.id = 'ecoInitials';
+    div.textContent = 'ET'; // ou 'ÉT' si vous préférez
+    Object.assign(div.style, {
+      width: '70px',
+      height: '70px',
+      borderRadius: '12px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontWeight: '800',
+      fontSize: '18px',
+      color: 'var(--text)',
+      background: 'linear-gradient(180deg,#ffffff,#f0fbf6)',
+      boxShadow: '0 8px 20px rgba(0,0,0,0.06)',
+      border: '1px solid rgba(0,0,0,0.04)'
+    });
+    anchor.appendChild(div);
+  }
+  // (optionnel) log utile pour debug
+  document.getElementById('ecoLogo')?.addEventListener('error', () => console.warn('ecoLogo failed to load: check path / filename'));
+</script>
 </body>
 </html>
